@@ -24,9 +24,16 @@ def _load_model():
     global GEN, LOAD_S, LOAD_ERR
     t0 = time.time()
     try:
+        model_path = MODEL_ID
+        if not MODEL_ID.startswith("/"):
+            # Mirror the proven flow exactly: full snapshot to a local dir,
+            # then load from the directory (hub-id loading picks a weight
+            # layout the H3 mapper cannot handle).
+            from huggingface_hub import snapshot_download
+            model_path = snapshot_download(MODEL_ID, local_dir="/tmp/FastH3")
         from fastvideo import VideoGenerator
         GEN = VideoGenerator.from_pretrained(
-            MODEL_ID,
+            model_path,
             num_gpus=1,
             dmd_denoising_steps=[999, 749, 500, 250],
         )
