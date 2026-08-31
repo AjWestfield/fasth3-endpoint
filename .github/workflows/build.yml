@@ -24,6 +24,8 @@ jobs:
           context: .
           push: true
           platforms: linux/amd64
-          tags: \n            ghcr.io/ajwestfield/fasth3-endpoint:latest\n            ghcr.io/ajwestfield/fasth3-endpoint:${{ github.sha }}
+          tags: |
+            ghcr.io/ajwestfield/fasth3-endpoint:latest
+            ghcr.io/ajwestfield/fasth3-endpoint:${{ github.sha }}
           labels: |
             org.opencontainers.image.source=https://github.com/AjWestfield/fasth3-endpoint
